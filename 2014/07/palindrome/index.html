@@ -1,0 +1,364 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>回文字符串问题 | lostfly&#39;s home</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="lostfly">
+    
+    <meta name="description" content="回文字符串问题是常见的算法问题，LeetCode上也有许多回文字符串相关的问题。
+回文数字合法的回文字符串回文分割回文分割2
+回文数字
+Determine whether an integer is a palindrome. Do this without extra space.
+click t">
+    
+    
+    
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="lostfalter" />
+    <meta name="twitter:title" content="回文字符串问题 | lostfly&#39;s home" />
+      
+    
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/pacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/pacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.svg" alt="lostfly&#39;s home" title="lostfly&#39;s home"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="lostfly&#39;s home">lostfly&#39;s home</a></h1>
+				<h2 class="blog-motto">welcome!</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+					<li>
+					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="text" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:lostfalter.github.io">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2014/07/palindrome/" title="回文字符串问题" itemprop="url">回文字符串问题</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="https://plus.google.com/109971592583340820000?rel=author" title="lostfly" target="_blank" itemprop="author">lostfly</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2014-07-28T02:23:20.000Z" itemprop="datePublished">7月 28 2014</time>
+    更新日期:<time datetime="2014-07-28T07:53:12.000Z" itemprop="dateModified">7月 28 2014</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#回文数字"><span class="toc-number">1.</span> <span class="toc-text">回文数字</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#合法的回文字符串"><span class="toc-number">2.</span> <span class="toc-text">合法的回文字符串</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#回文分割"><span class="toc-number">3.</span> <span class="toc-text">回文分割</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#回文分割2"><span class="toc-number">4.</span> <span class="toc-text">回文分割2</span></a></li></ol>
+		</div>
+		
+		<p>回文字符串问题是常见的算法问题，LeetCode上也有许多回文字符串相关的问题。</p>
+<p><a href="https://oj.leetcode.com/problems/palindrome-number/" target="_blank" rel="external">回文数字</a><br><a href="https://oj.leetcode.com/problems/valid-palindrome/" target="_blank" rel="external">合法的回文字符串</a><br><a href="https://oj.leetcode.com/problems/palindrome-partitioning/" target="_blank" rel="external">回文分割</a><br><a href="https://oj.leetcode.com/problems/palindrome-partitioning-ii/" target="_blank" rel="external">回文分割2</a></p>
+<h2 id="回文数字">回文数字</h2>
+<p>Determine whether an integer is a palindrome. Do this without extra space.</p>
+<p>click to show spoilers.</p>
+<p>Some hints:<br>Could negative integers be palindromes? (ie, -1)</p>
+<p>If you are thinking of converting the integer to string, note the restriction of using extra space.</p>
+<p>You could also try reversing an integer. However, if you have solved the problem “Reverse Integer”, you know that the reversed integer might overflow. How would you handle such case?</p>
+<p>There is a more generic way of solving this problem.</p>
+<p>这道题和回文字符串没有什么关系，但是好歹也是回文。<br>实际解题过程中里面还是有一些坑的，负数的数字不算回文，判断的时候要小心溢出。</p>
+<p>实际代码比较简单，就是不断判断数字的头部和尾巴是否相同。</p>
+<figure class="highlight c++"><pre><div class="line"><span class="keyword">bool</span> isPalindrome(<span class="keyword">int</span> x)</div><div class="line">{</div><div class="line">    <span class="keyword">if</span> (x &lt; <span class="number">0</span>)</div><div class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">    <span class="keyword">int</span> left_factor = <span class="number">1</span>;</div><div class="line">    <span class="keyword">int</span> right_factor = <span class="number">1</span>;</div><div class="line"></div><div class="line">    <span class="keyword">while</span> (x / left_factor &gt;= <span class="number">10</span>)</div><div class="line">    {</div><div class="line">        left_factor *= <span class="number">10</span>;</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="keyword">while</span> (left_factor &gt;= right_factor)</div><div class="line">    {</div><div class="line">        <span class="keyword">if</span> ((x / left_factor) % <span class="number">10</span> == (x / right_factor) % <span class="number">10</span>)</div><div class="line">        {</div><div class="line">            left_factor /= <span class="number">10</span>;</div><div class="line">            right_factor *= <span class="number">10</span>;</div><div class="line">        }</div><div class="line">        <span class="keyword">else</span></div><div class="line">            <span class="keyword">break</span>;</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="keyword">if</span> (left_factor &gt;= right_factor)</div><div class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">    <span class="keyword">else</span></div><div class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">}</div></pre></figure>
+
+<h2 id="合法的回文字符串">合法的回文字符串</h2>
+<p>Given a string, determine if it is a palindrome, considering only alphanumeric characters and ignoring cases.</p>
+<p>For example,<br>“A man, a plan, a canal: Panama” is a palindrome.<br>“race a car” is not a palindrome.</p>
+<p>Note:<br>Have you consider that the string might be empty? This is a good question to ask during an interview.</p>
+<p>For the purpose of this problem, we define empty string as valid palindrome.</p>
+<p>这题也是属于比较简单的，判断一个字符串是否是回文的，要注意题目中提到需要忽略空格和大小写因素。</p>
+<p>这里我写的判断比较简单，将原字符串复制进新的字符串，复制的过程中忽略空格并且统一转换成大写，然后直接首尾循环对比就好了。</p>
+<figure class="highlight c++"><pre><div class="line"><span class="keyword">bool</span> isPalindrome(<span class="built_in">string</span> s)</div><div class="line">{</div><div class="line">    <span class="keyword">int</span> len = s.length();</div><div class="line">    <span class="keyword">if</span> (len &lt;= <span class="number">1</span>)</div><div class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line"></div><div class="line">    <span class="built_in">string</span> new_str;</div><div class="line">    <span class="keyword">int</span> ignore = <span class="number">0</span>;</div><div class="line">    <span class="keyword">int</span> start = <span class="number">0</span>;</div><div class="line">    <span class="keyword">int</span> end;</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; len; i++)</div><div class="line">    {</div><div class="line">        <span class="keyword">if</span> (s[i] &lt;= <span class="string">'z'</span> && s[i] &gt;= <span class="string">'a'</span> ||</div><div class="line">            s[i] &lt;= <span class="string">'Z'</span> && s[i] &gt;= <span class="string">'A'</span> ||</div><div class="line">            s[i] &gt;= <span class="string">'0'</span> && s[i] &lt;= <span class="string">'9'</span>)</div><div class="line">        {</div><div class="line">            <span class="keyword">if</span> (s[i] &gt;= <span class="string">'a'</span>)</div><div class="line">                new_str.push_back(<span class="keyword">char</span>(s[i] - <span class="string">'a'</span> + <span class="string">'A'</span>));</div><div class="line">            <span class="keyword">else</span></div><div class="line">                new_str.push_back(s[i]);</div><div class="line">        }</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="keyword">int</span> p = <span class="number">0</span>;</div><div class="line">    <span class="keyword">int</span> q = new_str.length() - <span class="number">1</span>;</div><div class="line">    <span class="keyword">bool</span> flag = <span class="keyword">true</span>;</div><div class="line">    <span class="keyword">while</span> (p &lt; q)</div><div class="line">    {</div><div class="line">        <span class="keyword">if</span> (new_str[p] != new_str[q])</div><div class="line">        {</div><div class="line">            flag = <span class="keyword">false</span>;</div><div class="line">            <span class="keyword">break</span>;</div><div class="line">        }</div><div class="line"></div><div class="line">        p++;</div><div class="line">        q--;</div><div class="line">    }</div><div class="line">    <span class="keyword">return</span> flag;</div><div class="line">}</div></pre></figure>
+
+<h2 id="回文分割">回文分割</h2>
+<p>Given a string s, partition s such that every substring of the partition is a palindrome.</p>
+<p>Return all possible palindrome partitioning of s.</p>
+<p>For example, given s = “aab”,<br>Return</p>
+<p>  [<br>    [“aa”,”b”],<br>    [“a”,”a”,”b”]<br>  ]</p>
+<h2 id="回文分割2">回文分割2</h2>
+<p>Given a string s, partition s such that every substring of the partition is a palindrome.</p>
+<p>Return the minimum cuts needed for a palindrome partitioning of s.</p>
+<p>For example, given s = “aab”,<br>Return 1 since the palindrome partitioning [“aa”,”b”] could be produced using 1 cut.</p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Algorithm/">Algorithm</a><a href="/tags/LeetCode/">LeetCode</a>
+  </div>
+
+
+
+
+<div class="article-share" id="share">
+
+  <div data-url="http://lostfalter.github.io/2014/07/palindrome/" data-title="回文字符串问题 | lostfly&#39;s home" data-tsina="null" class="share clearfix">
+  </div>
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2014/07/sell-stock/" title="股票买卖问题">
+  <strong>PREVIOUS:</strong><br/>
+  <span>
+  股票买卖问题</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2014/07/histogram/"  title="直方图系列">
+ <strong>NEXT:</strong><br/> 
+ <span>直方图系列
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#回文数字"><span class="toc-number">1.</span> <span class="toc-text">回文数字</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#合法的回文字符串"><span class="toc-number">2.</span> <span class="toc-text">合法的回文字符串</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#回文分割"><span class="toc-number">3.</span> <span class="toc-text">回文分割</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#回文分割2"><span class="toc-number">4.</span> <span class="toc-text">回文分割2</span></a></li></ol>
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+			<li><a href="/categories/Alogrithm/" title="Alogrithm">Alogrithm<sup>1</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  
+  <div class="tagcloudlist">
+    <p class="asidetitle">标签</p>
+    <div class="tagcloudlist clearfix">
+       <a href="/tags/Algorithm/" style="font-size: 20.00px;">Algorithm</a><a href="/tags/LeetCode/" style="font-size: 15.00px;">LeetCode</a><a href="/tags/game/" style="font-size: 10.00px;">game</a><a href="/tags/hearthstone/" style="font-size: 10.00px;">hearthstone</a>
+    </div>
+  </div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+      <li><a href="http://yangjian.me" target="_blank" title="YangJian">Alimon's Blog</a></li>
+      <li><a href="http://zespia.tw/hexo" target="_blank" title="Hexo">Hexo</a></li>
+	  <li><a href="http://war3.replays.net" target="_blank" title="war3.replays.net">Replays.net</a></li>
+    </ul>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> This is my blog. <br/>
+			Welcome!</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		<a href="http://weibo.com/lostfalter" target="_blank" title="weibo"></a>
+		
+		
+		<a href="https://twitter.com/lostfalter" target="_blank" title="twitter"></a>
+		
+		
+		<a href="https://github.com/lostfalter" target="_blank" title="github"></a>
+		
+		
+	</div>
+		<p class="copyright">Powered by <a href="http://zespia.tw/hexo/" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/A-limon/pacman" target="_blank" title="Pacman">Pacman</a> © 2014 
+		
+		<a href="http://lostfalter.github.io" target="_blank" title="lostfly">lostfly</a>
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="Weibo"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+
+
+
+
+  </body>
+</html>

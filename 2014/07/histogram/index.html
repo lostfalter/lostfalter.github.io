@@ -1,0 +1,392 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>直方图系列 | lostfly&#39;s home</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="lostfly">
+    
+    <meta name="description" content="LeetCode上有一系列有关直方图的题目。
+直方图中最大的矩阵雨水积存问题矩阵中全是1的最大子矩阵
+这些题目我本来都是不会做的，在网上查阅到第一题的做法之后，我发现他们都可以用同一种做法。
+直方图中最大的矩阵
+Largest Rectangle in Histogram 
+Given n non-">
+    
+    
+    
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="lostfalter" />
+    <meta name="twitter:title" content="直方图系列 | lostfly&#39;s home" />
+      
+    
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/pacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/pacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.svg" alt="lostfly&#39;s home" title="lostfly&#39;s home"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="lostfly&#39;s home">lostfly&#39;s home</a></h1>
+				<h2 class="blog-motto">welcome!</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+					<li>
+					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="text" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:lostfalter.github.io">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2014/07/histogram/" title="直方图系列" itemprop="url">直方图系列</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="https://plus.google.com/109971592583340820000?rel=author" title="lostfly" target="_blank" itemprop="author">lostfly</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2014-07-27T16:07:59.000Z" itemprop="datePublished">7月 28 2014</time>
+    更新日期:<time datetime="2014-07-28T07:54:45.000Z" itemprop="dateModified">7月 28 2014</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#直方图中最大的矩阵"><span class="toc-number">1.</span> <span class="toc-text">直方图中最大的矩阵</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#雨水积存问题"><span class="toc-number">2.</span> <span class="toc-text">雨水积存问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#矩阵中全是1的最大子矩阵"><span class="toc-number">3.</span> <span class="toc-text">矩阵中全是1的最大子矩阵</span></a></li></ol>
+		</div>
+		
+		<p>LeetCode上有一系列有关直方图的题目。</p>
+<p><a href="https://oj.leetcode.com/problems/largest-rectangle-in-histogram/" target="_blank" rel="external">直方图中最大的矩阵</a><br><a href="https://oj.leetcode.com/problems/trapping-rain-water/" target="_blank" rel="external">雨水积存问题</a><br><a href="https://oj.leetcode.com/problems/maximal-rectangle/" target="_blank" rel="external">矩阵中全是1的最大子矩阵</a></p>
+<p>这些题目我本来都是不会做的，在网上查阅到第一题的做法之后，我发现他们都可以用同一种做法。</p>
+<h2 id="直方图中最大的矩阵">直方图中最大的矩阵</h2>
+<p>Largest Rectangle in Histogram </p>
+<p>Given n non-negative integers representing the histogram’s bar height where the width of each bar is 1, find the area of largest rectangle in the histogram.</p>
+<p><img src="http://www.leetcode.com/wp-content/uploads/2012/04/histogram.png" alt="直方图示意"></p>
+<p>Above is a histogram where width of each bar is 1, given height = [2,1,5,6,2,3].</p>
+<p><img src="http://www.leetcode.com/wp-content/uploads/2012/04/histogram_area.png" alt="直方图中的矩阵示意"><br>The largest rectangle is shown in the shaded area, which has area = 10 unit.</p>
+<p>For example,<br>Given height = <code>[2,1,5,6,2,3]</code>,<br>return 10.</p>
+<p>这个问题的难点在于我们不知道怎么样去遍历所有的直方图中的矩阵，然后找到面积最大的那个。</p>
+<p>我一开始的想法是矩阵都是有一个开头的，以每个柱体作为矩阵的开头去寻找最大的矩阵，逻辑是正确的，但是遍历的时间复杂度太高， 是O(n^2)，直观的感觉这种题目，时间复杂度应该是O(n)的。</p>
+<p>我找到的方法里，它的遍历方法是找到以某个柱体为最低高度的面积最大的矩阵。比如上图里红色的矩阵是以3号柱体为最低高度的，三号柱体决定了矩阵的高度。</p>
+<p>那如何找到以某个柱体为最低高度的矩阵呢？对某个柱体来说，往左边找到比他矮的第一个柱体，往右边找到第一个比他矮的柱体，左右两个柱体中间的矩形就是以某个柱体为最低高度的矩形了。因为这个矩形再往左走，或者右走，都不是以这个柱体作为最低高度的了。</p>
+<p>现在问题的关键就转换到如何找到某个柱体左边，和右边比他矮的第一个柱体了。这里使用栈，可以巧妙的实现这一功能，我们建立一个栈，栈中记录的是各个柱体的坐标，栈里存放的柱体高度是非递减的。</p>
+<p>我们从左到右扫描直方图，当栈为空或者新的柱体高度不比栈顶的柱体高度矮的时候就将其推入栈，否则这个柱体就是栈顶柱体的右边第一个比他矮的柱体，而栈顶柱体的前一个柱体就是柱体左边第一个比他矮的柱体，因为栈里面的柱体存放是非递减的。这样，我们就可以直接计算以栈顶柱体为最低高度的矩阵面积了。</p>
+<figure class="highlight c++"><pre><div class="line"><span class="keyword">int</span> bar_index = s.top();</div><div class="line">s.pop();</div><div class="line"><span class="keyword">int</span> area = height[bar_index] * (s.empty() ? index : index - s.top() - <span class="number">1</span>);</div></pre></figure>
+
+<p>上面是计算矩阵面积的代码，index表示的是当前遍历到的柱体的坐标，是栈顶柱体的右边第一个比它矮的柱体的坐标。</p>
+<p>在计算矩阵面积的时候有两种情况，一种是弹出栈顶柱体后，栈里已经没有元素了，说明在栈顶柱体的左边没有比他矮的柱体，另外一种情况就是栈里还有元素，矩阵的左右边界就是栈顶柱体坐标到遍历到的柱体坐标了。</p>
+<p>下面是全部实现代码。</p>
+<figure class="highlight c++"><pre><div class="line"><span class="keyword">int</span> largestRectangleArea(<span class="stl_container"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;</span> &height)</div><div class="line">{</div><div class="line">    <span class="stl_container"><span class="built_in">stack</span>&lt;<span class="keyword">int</span>&gt;</span> s;</div><div class="line">    <span class="keyword">int</span> len = height.size();</div><div class="line">    <span class="keyword">if</span> (len == <span class="number">0</span>)</div><div class="line">        <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">    <span class="keyword">int</span> index = <span class="number">0</span>;</div><div class="line">    <span class="keyword">int</span> max_area = <span class="number">0</span>;</div><div class="line">    <span class="keyword">while</span> (index &lt; len)</div><div class="line">    {</div><div class="line">        <span class="keyword">if</span> (s.empty() || height[index] &gt;= height[s.top()])</div><div class="line">        {</div><div class="line">            s.push(index++);</div><div class="line">        }</div><div class="line">        <span class="keyword">else</span></div><div class="line">        {</div><div class="line">            <span class="keyword">int</span> bar_index = s.top();</div><div class="line">            s.pop();</div><div class="line">            <span class="keyword">int</span> area = height[bar_index] * (s.empty() ? index : index - s.top() - <span class="number">1</span>);</div><div class="line">            <span class="keyword">if</span> (area &gt; max_area)</div><div class="line">                max_area = area;</div><div class="line">        }</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="keyword">while</span> (!s.empty())</div><div class="line">    {</div><div class="line">        <span class="keyword">int</span> bar_index = s.top();</div><div class="line">        s.pop();</div><div class="line">        <span class="keyword">int</span> area = height[bar_index] * (s.empty() ? index : index - s.top() - <span class="number">1</span>);</div><div class="line">        <span class="keyword">if</span> (area &gt; max_area)</div><div class="line">            max_area = area;</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="keyword">return</span> max_area;</div><div class="line">}</div></pre></figure>
+
+<h2 id="雨水积存问题">雨水积存问题</h2>
+<p>Trapping Rain Water</p>
+<p>Given n non-negative integers representing an elevation map where the width of each bar is 1, compute how much water it is able to trap after raining.</p>
+<p>For example,<br>Given [0,1,0,2,1,0,1,3,2,1,2,1], return 6.</p>
+<p><img src="http://www.leetcode.com/wp-content/uploads/2012/08/rainwatertrap.png" alt="雨水积存问题示意"></p>
+<p>The above elevation map is represented by array [0,1,0,2,1,0,1,3,2,1,2,1]. In this case, 6 units of rain water (blue section) are being trapped. Thanks Marcos for contributing this image!</p>
+<p>这道题同样是直方图的形式，问的是直方图中可以存储多少雨水。和上一道题一样，关键在于如何计算雨水的体积（面积）。</p>
+<p>我们可以采用和上一道题相似的定义方法。我们计算以某一个柱体为最低高度的区间大小，对于某一个柱体来说，往左边找第一个比他高的柱体，往右边找第一个比他高的柱体，那左右两个柱体围出的区域就是以这个柱体为最低高度的存储雨水区间。<br>这里有一些地方值得注意：</p>
+<blockquote>
+<ul>
+<li>对于某一个柱体来说，两边不一定都有比他高的柱体，这说明并没有以他为最低高  度的存储雨水区域</li>
+<li>对于整块连成一片的储水区域，我们并不是一起计算的，是分层次计算的。</li>
+</ul>
+</blockquote>
+<p>这里同样用栈作为核心的数据结构。我们建立一个栈，里面存放了柱体的坐标，栈里的柱体是递减存放的。<br>我们从左到右顺序扫描柱体，如果柱体的高度比栈顶的柱体小，就压入栈，否者我们可以计算以栈顶柱体为最低高度的储水区域。</p>
+<figure class="highlight c++"><pre><div class="line">bar_index = s.top();</div><div class="line">s.pop();</div><div class="line"><span class="keyword">if</span> (s.empty())</div><div class="line">    <span class="keyword">continue</span>;</div><div class="line"></div><div class="line"><span class="keyword">if</span> (A[s.top()] &gt; A[index])</div><div class="line">    rain = (A[index] - A[bar_index]) * (index - s.top() - <span class="number">1</span>);</div><div class="line"><span class="keyword">else</span></div><div class="line">    rain = (A[s.top()] - A[bar_index]) * (index - s.top() - <span class="number">1</span>);</div><div class="line">total += rain;</div></pre></figure>
+
+<p>这里计算储水区域的时候，是以左右柱体高度中较低者与栈顶柱体之间的高度差作为储水区域的高度，长度是左右两边柱体的距离。另外，因为栈里的柱体高度是递减存放的，所以可能会存在处理和栈顶柱体同样高度的柱体的情况，这时候，因为计算出来的高度差是0，储水区域也为0，并不会重复计算储水区域。</p>
+<p>下面是这道题的全部实现代码：</p>
+<figure class="highlight c++"><pre><div class="line"><span class="keyword">int</span> trap(<span class="keyword">int</span> A[], <span class="keyword">int</span> n)</div><div class="line">{</div><div class="line">    <span class="keyword">if</span> (n &lt;= <span class="number">1</span>)</div><div class="line">        <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line"></div><div class="line">    <span class="stl_container"><span class="built_in">stack</span>&lt;<span class="keyword">int</span>&gt;</span> s;</div><div class="line">    <span class="keyword">int</span> index = <span class="number">0</span>;</div><div class="line">    <span class="keyword">int</span> total = <span class="number">0</span>;</div><div class="line">    <span class="keyword">int</span> rain;</div><div class="line">    <span class="keyword">int</span> bar_index;</div><div class="line">    <span class="keyword">while</span> (index &lt; n)</div><div class="line">    {</div><div class="line">        <span class="keyword">if</span> (s.empty() || A[index] &lt; A[s.top()])</div><div class="line">        {</div><div class="line">            s.push(index++);</div><div class="line">        }</div><div class="line">        <span class="keyword">else</span></div><div class="line">        {</div><div class="line">            bar_index = s.top();</div><div class="line">            s.pop();</div><div class="line">            <span class="keyword">if</span> (s.empty())</div><div class="line">                <span class="keyword">continue</span>;</div><div class="line"></div><div class="line">            <span class="keyword">if</span> (A[s.top()] &gt; A[index])</div><div class="line">                rain = (A[index] - A[bar_index]) * (index - s.top() - <span class="number">1</span>);</div><div class="line">            <span class="keyword">else</span></div><div class="line">                rain = (A[s.top()] - A[bar_index]) * (index - s.top() - <span class="number">1</span>);</div><div class="line">            total += rain;</div><div class="line">        }</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="keyword">return</span> total;</div><div class="line">}</div></pre></figure>
+
+<h2 id="矩阵中全是1的最大子矩阵">矩阵中全是1的最大子矩阵</h2>
+<p>Maximal Rectangle</p>
+<p>Given a 2D binary matrix filled with 0’s and 1’s, find the largest rectangle containing all ones and return its area.</p>
+<p>题目的描述非常简单，可能会产生歧义，我第一次做的时候就完全把题目想歪了，把题目想成是找到一个子矩阵，里面的包含了原矩阵中所有的1。其实题目的意思是在原有的元素是0和1的矩阵里面找到一个最大的子矩阵，这个子矩阵里全是1。</p>
+<p>仔细想想，这题同样是一个直方图的问题，我们把矩阵中连续是1的区间想象成是柱体就可以了。</p>
+<p>理论上这个矩阵中的直方图是正的，或者是倒的都可以，不过在我的直接想象中，这个直方图是歪着的，顺时针旋转了90度。</p>
+<p><img src="http://a.hiphotos.bdimg.com/album/s=1600;q=90/sign=b21ea5e3aad3fd1f3209a63c007e1e6e/279759ee3d6d55fb826e40eb6f224f4a21a4dd56.jpg" alt="矩阵形态转换"></p>
+<p>首先我们要将矩阵中的直方图标注出来，并且标明柱体的高度，这部分可以用动态规划来做，把原来矩阵中为1的元素改成以改元素为起点的连续1的个数。</p>
+<figure class="highlight c++"><pre><div class="line"><span class="stl_container"><span class="built_in">vector</span>&lt;<span class="stl_container"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;</span>&gt;</span> continuous_ones(m, <span class="stl_container"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;</span>(n));</div><div class="line"></div><div class="line"><span class="keyword">for</span> (<span class="keyword">int</span> row = <span class="number">0</span>; row &lt; m; row++) {</div><div class="line">    <span class="keyword">if</span> (matrix[row][n - <span class="number">1</span>] == <span class="string">'1'</span>)</div><div class="line">        continuous_ones[row][n - <span class="number">1</span>] = <span class="number">1</span>;</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> col = n - <span class="number">2</span>; col &gt;= <span class="number">0</span>; col--) {</div><div class="line">        <span class="keyword">if</span> (matrix[row][col] == <span class="string">'1'</span>)</div><div class="line">            continuous_ones[row][col] = continuous_ones[row][col + <span class="number">1</span>] + <span class="number">1</span>;</div><div class="line">    }</div><div class="line">}</div></pre></figure>
+
+<p>然后对每一列，都做直方图中最大的矩阵计算就可以了。</p>
+<p>下面是本题的全部实现代码：</p>
+<figure class="highlight c++"><pre><div class="line"><span class="keyword">int</span> maximalRectangle(<span class="stl_container"><span class="built_in">vector</span>&lt;<span class="stl_container"><span class="built_in">vector</span>&lt;<span class="keyword">char</span>&gt;</span> &gt;</span> &matrix) {</div><div class="line">    <span class="keyword">int</span> m = matrix.size();</div><div class="line">    <span class="keyword">if</span> (m == <span class="number">0</span>)</div><div class="line">        <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">    <span class="keyword">int</span> n = matrix.front().size();</div><div class="line"></div><div class="line">    <span class="stl_container"><span class="built_in">vector</span>&lt;<span class="stl_container"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;</span>&gt;</span> continuous_ones(m, <span class="stl_container"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;</span>(n));</div><div class="line"></div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> row = <span class="number">0</span>; row &lt; m; row++) {</div><div class="line">        <span class="keyword">if</span> (matrix[row][n - <span class="number">1</span>] == <span class="string">'1'</span>)</div><div class="line">            continuous_ones[row][n - <span class="number">1</span>] = <span class="number">1</span>;</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> col = n - <span class="number">2</span>; col &gt;= <span class="number">0</span>; col--) {</div><div class="line">            <span class="keyword">if</span> (matrix[row][col] == <span class="string">'1'</span>)</div><div class="line">                continuous_ones[row][col] = continuous_ones[row][col + <span class="number">1</span>] + <span class="number">1</span>;</div><div class="line">        }</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="keyword">int</span> max_area = <span class="number">0</span>;</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> col = <span class="number">0</span>; col &lt; n; col++)</div><div class="line">    {</div><div class="line">        <span class="stl_container"><span class="built_in">stack</span>&lt;<span class="keyword">int</span>&gt;</span> s;</div><div class="line">        <span class="keyword">int</span> row = <span class="number">0</span>;</div><div class="line">        <span class="keyword">while</span> (row &lt; m)</div><div class="line">        {</div><div class="line">            <span class="keyword">if</span> (s.empty() || continuous_ones[row][col] &gt; continuous_ones[s.top()][col])</div><div class="line">            {</div><div class="line">                s.push(row++);</div><div class="line">            }</div><div class="line">            <span class="keyword">else</span></div><div class="line">            {</div><div class="line">                <span class="keyword">int</span> height = continuous_ones[s.top()][col];</div><div class="line">                s.pop();</div><div class="line">                <span class="keyword">int</span> area = height * (s.empty() ? row : (row - s.top() - <span class="number">1</span>));</div><div class="line">                <span class="keyword">if</span> (area &gt; max_area)</div><div class="line">                    max_area = area;</div><div class="line">            }</div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="keyword">while</span> (!s.empty())</div><div class="line">        {</div><div class="line">            <span class="keyword">int</span> row_index = s.top();</div><div class="line">            s.pop();</div><div class="line">            <span class="keyword">int</span> area = continuous_ones[row_index][col] *</div><div class="line">                (s.empty() ? row : (row - s.top() - <span class="number">1</span>));</div><div class="line">            <span class="keyword">if</span> (area &gt; max_area)</div><div class="line">                max_area = area;</div><div class="line">        }</div><div class="line">    }</div><div class="line">    <span class="keyword">return</span> max_area;</div><div class="line">}</div></pre></figure>
+
+  
+	</div>
+		<footer class="article-footer clearfix">
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Algorithm/">Algorithm</a><a href="/tags/LeetCode/">LeetCode</a>
+  </div>
+
+
+
+
+<div class="article-share" id="share">
+
+  <div data-url="http://lostfalter.github.io/2014/07/histogram/" data-title="直方图系列 | lostfly&#39;s home" data-tsina="null" class="share clearfix">
+  </div>
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2014/07/palindrome/" title="回文字符串问题">
+  <strong>PREVIOUS:</strong><br/>
+  <span>
+  回文字符串问题</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2014/07/hello-world/"  title="Hello World">
+ <strong>NEXT:</strong><br/> 
+ <span>Hello World
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#直方图中最大的矩阵"><span class="toc-number">1.</span> <span class="toc-text">直方图中最大的矩阵</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#雨水积存问题"><span class="toc-number">2.</span> <span class="toc-text">雨水积存问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#矩阵中全是1的最大子矩阵"><span class="toc-number">3.</span> <span class="toc-text">矩阵中全是1的最大子矩阵</span></a></li></ol>
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+			<li><a href="/categories/Alogrithm/" title="Alogrithm">Alogrithm<sup>1</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  
+  <div class="tagcloudlist">
+    <p class="asidetitle">标签</p>
+    <div class="tagcloudlist clearfix">
+       <a href="/tags/Algorithm/" style="font-size: 20.00px;">Algorithm</a><a href="/tags/LeetCode/" style="font-size: 15.00px;">LeetCode</a><a href="/tags/game/" style="font-size: 10.00px;">game</a><a href="/tags/hearthstone/" style="font-size: 10.00px;">hearthstone</a>
+    </div>
+  </div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+      <li><a href="http://yangjian.me" target="_blank" title="YangJian">Alimon's Blog</a></li>
+      <li><a href="http://zespia.tw/hexo" target="_blank" title="Hexo">Hexo</a></li>
+	  <li><a href="http://war3.replays.net" target="_blank" title="war3.replays.net">Replays.net</a></li>
+    </ul>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> This is my blog. <br/>
+			Welcome!</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		<a href="http://weibo.com/lostfalter" target="_blank" title="weibo"></a>
+		
+		
+		<a href="https://twitter.com/lostfalter" target="_blank" title="twitter"></a>
+		
+		
+		<a href="https://github.com/lostfalter" target="_blank" title="github"></a>
+		
+		
+	</div>
+		<p class="copyright">Powered by <a href="http://zespia.tw/hexo/" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/A-limon/pacman" target="_blank" title="Pacman">Pacman</a> © 2014 
+		
+		<a href="http://lostfalter.github.io" target="_blank" title="lostfly">lostfly</a>
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="Weibo"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+
+
+
+
+  </body>
+</html>
